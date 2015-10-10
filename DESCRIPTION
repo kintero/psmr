@@ -1,0 +1,11 @@
+Package: psmr
+Type: Package
+Title: An implementation of Price Sensitivity Meter
+Version: 0.5
+Depends: R (>= 3.1.3), lattice
+Date: 2015-10-10
+Author: Karel López Quintero <krelopq@yahoo.es>
+Maintainer: Karel López Quintero <krelopq@yahoo.es>
+Description:
+License: GPL (>= 2)
+LazyData: TRUE
