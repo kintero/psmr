@@ -22,6 +22,5 @@ summary.psm<-function(psmObject){
                  Indifference = ipprice,
                  Optimal = opprice)
   detach(psmObject)
-  print(df)
-
+  return(df)
 }
