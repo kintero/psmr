@@ -1,9 +1,10 @@
 Package: psmr
 Type: Package
 Title: An implementation of Price Sensitivity Meter
-Version: 0.5
+Description: This packages provides functions for calculate and analyze optimal prices using the technique of Van Westendorp, Price Sensitivity Meter (PSM).
+Version: 0.6
 Depends: R (>= 3.1.3), lattice
-Date: 2015-10-10
+Date: 2015-10-21
 Author: Karel López Quintero <krelopq@yahoo.es>
 Maintainer: Karel López Quintero <krelopq@yahoo.es>
 Description:
