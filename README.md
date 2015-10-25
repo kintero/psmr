@@ -8,4 +8,6 @@ library(devtools)
 devtools::install_github("kintero/psmr")
 ```
 
+# Examples
 
+Spanish: http://rpubs.com/Capek/psmres
