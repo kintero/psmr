@@ -1,7 +1,8 @@
 
 
-plot.psm <- function(psmObject, col = c("chartreuse4", "chartreuse3", "red3",
-                                        "red4")) {
+plot.psm <- function(psmObject, 
+                     col = c("chartreuse4", "chartreuse3", "red3", "red4"), 
+                     names = c("Too cheap", "Cheap", "Expensive", "Too expensive")) {
 
   # Parada si la clase no es psm
   if (class(psmObject) != "psm")
@@ -16,6 +17,9 @@ plot.psm <- function(psmObject, col = c("chartreuse4", "chartreuse3", "red3",
   col_expensive = col[3]
   col_tooexpensive = col[4]
   col_vector = c(col_toocheap, col_cheap, col_expensive, col_tooexpensive)
+  
+  if (length(names) < 4)
+    stop ("Es necesario indicar cuatro nombres")
 
   # Inicialización de objeto que será utilizado por lattice para dibujar
   # las curvas
@@ -49,14 +53,18 @@ plot.psm <- function(psmObject, col = c("chartreuse4", "chartreuse3", "red3",
                        "xipprice", "yipprice", "xopprice", "yopprice")
 
   }
+  
+  levels(datadf$variable)<-names
 
   # Si existe un solo grupo (por defecto) se utiliza la siguiente función
   # que añade los puntos de intersección en el gráfico
   if (psmObject$n.groups == 1) {
     xyplot(ecdf ~ price | group, group = variable, type = "l", data = datadf,
-           col = col_vector, lty = c(1, 2, 2, 1), lwd = 2, auto.key = TRUE,
+           col = col_vector, lty = c(1, 2, 2, 1), lwd = 2, auto.key = TRUE, 
+           par.strip.text=list(col=c("white")),
+           strip=strip.custom(bg="black"),
            key = list(type = "l", text = list(label = levels(datadf$variable)),
-                      lines = list(lty = c(1, 2, 2, 1), lwd = 2),
+                      lines = list(lty = c(1, 2, 2, 1), lwd = 2), 
                       column = nlevels(datadf$variable),
                       space = "top", col = col_vector), xlab = list(label = "Price",
                                                                     fontsize = 14), ylab = list(label = ""), scales = list(y = list(tck = c(1,
@@ -76,6 +84,8 @@ plot.psm <- function(psmObject, col = c("chartreuse4", "chartreuse3", "red3",
   } else {
     xyplot(ecdf ~ price | group, group = variable, type = "l", data = datadf,
            col = col_vector, lty = c(1, 2, 2, 1), lwd = 2, auto.key = TRUE,
+           par.strip.text=list(col=c("white")),
+           strip=strip.custom(bg="black"),
            key = list(type = "l", text = list(label = levels(datadf$variable)),
                       lines = list(lty = c(1, 2, 2, 1), lwd = 2),
                       column = nlevels(datadf$variable),

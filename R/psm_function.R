@@ -67,7 +67,7 @@ psm <- function(data, toocheap, cheap, expensive, tooexpensive, by = NULL) {
     tooexpensive <- as.numeric(data[which(data[, 5] == by[i]), 4])
 
     ## Cálculo de las ecdf
-    # Descrecientes
+    # Decrecientes
     tch <- Ecdf(toocheap, crec = FALSE)
     ch <- Ecdf(cheap, crec = FALSE)
     # Crecientes
@@ -106,9 +106,8 @@ psm <- function(data, toocheap, cheap, expensive, tooexpensive, by = NULL) {
     x_tooexpensive <- ecdf_tooexpensive[, 3]
     y_tooexpensive <- ecdf_tooexpensive[, 2]
 
-    ## Encontrar los puntos de intersección de las curvas del PSM. Con
-    ## approx() se obtienen los índices de pares de puntos próximos en donde
-    ## ocurre la intersección
+    ## Encontrar los puntos de intersección de las curvas del PSM. Se utiliza la función aprox 
+    ## para igualar las longitudes de los vectores de las ecdf y evitar alertas.
 
     ## Point of Marginal Cheapness toocheap vs expensive
     y_expensivestar <- approx(x_toocheap, y_toocheap, xout = x_expensive,

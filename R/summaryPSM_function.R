@@ -21,6 +21,9 @@ summary.psm<-function(psmObject){
                  Max = maxprice,
                  Indifference = ipprice,
                  Optimal = opprice)
+  if (substring(Sys.getlocale("LC_CTYPE"), 1, 5)=="es_ES"){
+    names(df)<-c("Grupo","Mín", "Máx", "Indiferencia", "Óptimo")
+  }
   detach(psmObject)
   return(df)
 }
