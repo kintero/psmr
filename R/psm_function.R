@@ -198,8 +198,11 @@ psm <- function(data, toocheap, cheap, expensive, tooexpensive, by = NULL) {
   # Con el número de grupos, el nombre de cada grupo y la lista
   # resultante del bucle anterior se contruye otra lista que se le
   # atribuirá una clase llamada 'psm'
-  psmObject <- list(n.groups = length(by), names.groups = by, variables = c(toocheap,
-                                                                            cheap, expensive, tooexpensive), results = psmLista)
+  psmObject <- list(n.groups = length(by), 
+                    names.groups = by, 
+                    variables = c(toocheap, cheap, expensive, tooexpensive), 
+                    results = psmLista)
+  names(psmObject$results)<-psmObject$names.groups
   class(psmObject) <- "psm"
   return(psmObject)
 }
