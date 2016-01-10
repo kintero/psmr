@@ -198,9 +198,17 @@ psm <- function(data, toocheap, cheap, expensive, tooexpensive, by = NULL) {
   # Con el número de grupos, el nombre de cada grupo y la lista
   # resultante del bucle anterior se contruye otra lista que se le
   # atribuirá una clase llamada 'psm'
+  ecdfList<-list()
+  ecdfList$toocheap<-do.call(rbind, lapply(psmLista, '[[', 'toocheap'))
+  ecdfList$cheap<-do.call(rbind, lapply(psmLista, '[[', 'cheap'))
+  ecdfList$expensive<-do.call(rbind, lapply(psmLista, '[[', 'expensive'))
+  ecdfList$tooexpensive<-do.call(rbind, lapply(psmLista, '[[', 'tooexpensive'))
+  ecdfDF<-do.call(rbind, ecdfList)
+  row.names(ecdfDF)<-NULL
+  
   psmObject <- list(n.groups = length(by), 
-                    names.groups = by, 
-                    variables = c(toocheap, cheap, expensive, tooexpensive), 
+                    names.groups = by,
+                    data =  ecdfDF,
                     results = psmLista)
   names(psmObject$results)<-psmObject$names.groups
   class(psmObject) <- "psm"
