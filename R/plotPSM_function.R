@@ -4,7 +4,7 @@ plot.psm <- function(psmObject,
                      col = c("chartreuse4", "chartreuse3", "red3", "red4"), 
                      names = c("Too cheap", "Cheap", "Expensive", "Too expensive"),
                      main=NULL, ylab=NULL, xlab="Price", 
-                     legend.position="top") {
+                     legend.position="top", legend.columns=4) {
 
   # Parada si la clase no es psm
   if (class(psmObject) != "psm")
@@ -26,26 +26,7 @@ plot.psm <- function(psmObject,
   # Inicialización de objeto que será utilizado por lattice para dibujar
   # las curvas
   datadf <- data.frame()
-
-  # Inicialización del objeto que será utilizado para dibujar los puntos
-  # de intersección. Solo serán dibujados en el caso de ser un único grupo
-  puntos <- data.frame()
-
-  # Bucle para extraer los valores de interés según el número de grupos
-  for (i in 1:psmObject$n.groups) {
-    tmp <- rbind(psmObject$results[[i]]$toocheap, psmObject$results[[i]]$cheap,
-                 psmObject$results[[i]]$expensive, psmObject$results[[i]]$tooexpensive)
-    # El primero se graba directamente en datadf, los siguientes se adjuntan
-    # con rbind
-    if (i == 1) {
-      datadf <- tmp
-    } else {
-      datadf <- rbind(datadf, tmp)
-    }
-
-  }
-  
-  levels(datadf$variable)<-names
+  datadf<-psmObject$data
   datadf$ecdf<-datadf$ecdf*100
 
   # Si existe un solo grupo (por defecto) se utiliza la siguiente función
@@ -54,9 +35,9 @@ plot.psm <- function(psmObject,
     xyplot(ecdf ~ price | group, group = variable, type = "l", data = datadf,
            col = col_vector, lty = c(1, 2, 2, 1), lwd = 2, auto.key = TRUE,
            strip=FALSE,
-           key = list(type = "l", text = list(label = levels(datadf$variable)),
+           key = list(type = "l", text = list(label = names),
                       lines = list(lty = c(1, 2, 2, 1), lwd = 2), 
-                      column = nlevels(datadf$variable),
+                      column = legend.columns,
                       space = legend.position, col = col_vector), 
            main=main,
            xlab = list(label = xlab, fontsize = 14), 
@@ -69,9 +50,9 @@ plot.psm <- function(psmObject,
            col = col_vector, lty = c(1, 2, 2, 1), lwd = 2, auto.key = TRUE,
            par.strip.text=list(col=c("white")),
            strip=strip.custom(bg="black"),
-           key = list(type = "l", text = list(label = levels(datadf$variable)),
+           key = list(type = "l", text = list(label = names),
                       lines = list(lty = c(1, 2, 2, 1), lwd = 2),
-                      column = nlevels(datadf$variable),
+                      column = legend.columns,
                       space = legend.position, col = col_vector), 
            main=main,
            xlab = list(label = xlab, fontsize = 14), 
